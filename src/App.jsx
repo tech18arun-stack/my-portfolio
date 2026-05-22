@@ -9,6 +9,7 @@ import Systems from './sections/Systems'
 import Contact from './sections/Contact'
 import Footer from './layout/Footer'
 import { useTheme } from './hooks/useTheme'
+import ThreeBackground from './components/ThreeBackground'
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -44,7 +45,8 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen transition-colors duration-300 dark:bg-black bg-white dark:text-gray-100 text-gray-900 overflow-x-hidden">
+    <div className="min-h-screen transition-colors duration-300 dark:bg-black bg-white dark:text-gray-100 text-gray-900 overflow-x-hidden relative">
+      <ThreeBackground />
       <div 
         className="custom-cursor hidden lg:block"
         style={{ 

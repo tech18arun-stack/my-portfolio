@@ -1,6 +1,7 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { Server, ShieldCheck, Globe, Activity, Terminal, Database } from 'lucide-react';
+import CodeTerminal from '../components/CodeTerminal';
 
 const Systems = () => {
   const infraDetails = [
@@ -28,7 +29,7 @@ const Systems = () => {
 
             <div className="grid sm:grid-cols-2 gap-6">
               {infraDetails.map((item, i) => (
-                <motion.div
+                <Motion.div
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -39,7 +40,7 @@ const Systems = () => {
                   <div className="text-blue-500 mb-4 group-hover:scale-110 transition-transform">{item.icon}</div>
                   <h4 className="font-black text-sm uppercase tracking-widest mb-2">{item.title}</h4>
                   <p className="text-xs text-gray-500 leading-relaxed font-bold">{item.desc}</p>
-                </motion.div>
+                </Motion.div>
               ))}
             </div>
           </div>
@@ -64,12 +65,12 @@ const Systems = () => {
                        <span className="text-green-500">Online</span>
                     </div>
                     <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
-                       <motion.div 
+                       <Motion.div 
                         initial={{ width: 0 }}
                         whileInView={{ width: '92%' }}
                         className="h-full bg-blue-500"
                         transition={{ duration: 1.5 }}
-                       ></motion.div>
+                       ></Motion.div>
                     </div>
                  </div>
               </div>
@@ -84,23 +85,17 @@ const Systems = () => {
                        <span>8.4k req/s</span>
                     </div>
                     <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
-                       <motion.div 
+                       <Motion.div 
                         initial={{ width: 0 }}
                         whileInView={{ width: '75%' }}
                         className="h-full bg-purple-500"
                         transition={{ duration: 1.5, delay: 0.3 }}
-                       ></motion.div>
+                       ></Motion.div>
                     </div>
                  </div>
               </div>
 
-              <div className="p-6 bg-black/40 rounded-2xl border border-white/5 font-mono text-[10px] space-y-2">
-                 <p className="text-gray-500"># System Diagnostics</p>
-                 <p className="text-green-500">❯ Running health check for agriflow.websitescorp.com...</p>
-                 <p className="text-blue-400">❯ SSL Status: Valid (Auto-renew enabled via Certbot)</p>
-                 <p className="text-yellow-400">❯ Reverse Proxy: Active [Nginx]</p>
-                 <p className="animate-pulse">❯ All systems operational.</p>
-              </div>
+              <CodeTerminal />
             </div>
           </div>
         </div>

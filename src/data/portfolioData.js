@@ -141,6 +141,50 @@ export const portfolioData = {
       ],
       techStack: ["Flutter", "Firebase", "Maps API", "Linux"],
       category: "Mobile App"
+    },
+    {
+      id: 5,
+      title: "Sankar Hi-Tech Nursery",
+      subtitle: "Premium Botanical E-commerce",
+      description: "A luxury e-commerce platform for high-end nursery products, featuring real-time inventory and expert botanical care integration.",
+      image: "/images/nursery.png",
+      problem: "Difficulty in managing specialized botanical inventory and providing real-time plant care advice to customers.",
+      solution: "Developed a high-performance React 19 platform with Appwrite backend, featuring glassmorphism UI and complex state management for thousands of SKUs.",
+      architecture: [
+        "React 19 (Vite)",
+        "Tailwind CSS v4",
+        "Appwrite Cloud",
+        "Framer Motion"
+      ],
+      impact: [
+        "Seamless management of 500+ plant varieties",
+        "Sub-second page transitions and search",
+        "Fully integrated admin dashboard for order tracking"
+      ],
+      techStack: ["React", "Tailwind CSS", "Appwrite", "Vite"],
+      category: "Web App"
+    },
+    {
+      id: 6,
+      title: "Aditi Infotech",
+      subtitle: "Enterprise IT Solutions Portal",
+      description: "A professional corporate portal for a leading IT solutions provider, focusing on service showcase and client engagement.",
+      image: "/images/aditi.png",
+      problem: "Need for a high-performance, SEO-optimized platform to showcase complex IT services and manage client inquiries.",
+      solution: "Built a modern, responsive corporate site with optimized assets, advanced lead generation forms, and robust server-side routing.",
+      architecture: [
+        "React.js",
+        "Nginx High-Performance Routing",
+        "Custom Lead Engine",
+        "Certbot SSL Security"
+      ],
+      impact: [
+        "99.9% uptime on managed Linux infrastructure",
+        "Significant increase in client inquiry conversion",
+        "Optimized SEO for IT services in the local market"
+      ],
+      techStack: ["React", "Nginx", "Linux", "SSL"],
+      category: "Web App"
     }
   ],
   experience: [

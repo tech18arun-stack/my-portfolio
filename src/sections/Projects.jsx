@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
 import { ExternalLink, Github, ArrowUpRight, Zap, Shield, Cpu } from 'lucide-react';
+import TiltCard from '../components/TiltCard';
 
 const Projects = () => {
   const [filter, setFilter] = useState('All');
@@ -48,7 +49,7 @@ const Projects = () => {
         <div className="space-y-40">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, idx) => (
-              <motion.div
+              <Motion.div
                 key={project.id}
                 layout
                 initial={{ opacity: 0, y: 50 }}
@@ -60,28 +61,25 @@ const Projects = () => {
                 }`}
               >
                 {/* Visual Section */}
-                <div className="w-full lg:w-[55%] relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 blur-2xl rounded-[3rem] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                  <div className="relative glass rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl">
-                    <motion.img 
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.8 }}
+                <TiltCard className="w-full lg:w-[55%] group">
+                  <div className="relative glass rounded-[3rem] overflow-hidden border border-white/10">
+                    <img 
                       src={project.image} 
                       alt={project.title}
                       className="w-full h-auto object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                       <div className="flex gap-4">
-                        <button className="px-6 py-3 bg-white text-black font-black text-xs uppercase tracking-widest flex items-center gap-2 rounded-xl">
+                        <button className="px-6 py-3 bg-white text-black font-black text-xs uppercase tracking-widest flex items-center gap-2 rounded-xl cursor-pointer">
                           Live Demo <ExternalLink size={14} />
                         </button>
-                        <button className="p-3 bg-white/20 backdrop-blur-md text-white rounded-xl hover:bg-white/40 transition-colors">
+                        <button className="p-3 bg-white/20 backdrop-blur-md text-white rounded-xl hover:bg-white/40 transition-colors cursor-pointer">
                           <Github size={18} />
                         </button>
                       </div>
                     </div>
                   </div>
-                </div>
+                </TiltCard>
 
                 {/* Content Section */}
                 <div className="w-full lg:w-[45%] space-y-8">
@@ -134,14 +132,14 @@ const Projects = () => {
                     </div>
                   </div>
 
-                  <motion.button 
+                  <Motion.button 
                     whileHover={{ x: 10 }}
                     className="flex items-center gap-3 text-sm font-black uppercase tracking-[0.3em] text-gradient group"
                   >
                     View Case Study <ArrowUpRight size={18} />
-                  </motion.button>
+                  </Motion.button>
                 </div>
-              </motion.div>
+              </Motion.div>
             ))}
           </AnimatePresence>
         </div>

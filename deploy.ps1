@@ -1,54 +1,45 @@
-# Arun's Premium Portfolio Deployment Script
-# Targets: server@100.110.78.25 : Port 55222
-
+# Arun's Premium Portfolio Deployment Script (V4 - SSL Fix Focus)
 $SERVER_IP = "100.110.78.25"
 $SERVER_PORT = "55222"
 $USER = "server"
-$REMOTE_PATH = "/home/server/arun"
+$REMOTE_PATH = "/home/server/My_Sites/arun"
+$DOMAIN = "arun.websitescorp.com"
 
-Write-Host ">>> Starting Deployment Process..." -ForegroundColor Cyan
+Write-Host ">>> Starting SSL-Focused Deployment..." -ForegroundColor Cyan
 
-# 1. Build the production bundle
-Write-Host ">>> Building production bundle..." -ForegroundColor Yellow
+# 1. Build
 npm run build
 
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "[!] Build failed! Deployment aborted." -ForegroundColor Red
-    exit
-}
-
-# 2. Package the build
-Write-Host ">>> Zipping dist folder..." -ForegroundColor Yellow
+# 2. Zip
 if (Test-Path "portfolio_deploy.zip") { Remove-Item "portfolio_deploy.zip" }
 Compress-Archive -Path dist\* -DestinationPath portfolio_deploy.zip
 
-# 3. Upload to server
-Write-Host ">>> Uploading files to server ($SERVER_IP)..." -ForegroundColor Yellow
-$DESTINATION = "$USER@$SERVER_IP`:$REMOTE_PATH"
-scp -P $SERVER_PORT portfolio_deploy.zip nginx_template.conf $DESTINATION
+# 3. Upload
+scp -P $SERVER_PORT portfolio_deploy.zip nginx_template.conf "$USER@$SERVER_IP`:$REMOTE_PATH"
 
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "[!] Upload failed! Check your connection or password." -ForegroundColor Red
-    exit
-}
-
-# 4. Remote Extraction and Setup
-Write-Host ">>> Running Server Commands..." -ForegroundColor Yellow
-$SSH_TARGET = "$USER@$SERVER_IP"
+# 4. Remote Setup
 $REMOTE_CMD = @"
 cd $REMOTE_PATH
 unzip -o portfolio_deploy.zip -d .
 rm portfolio_deploy.zip
-echo 'Files extracted. Configuring Nginx...'
+
+# Update Nginx config
 sudo cp nginx_template.conf /etc/nginx/sites-available/arun
-sudo rm -f /etc/nginx/sites-enabled/default
-sudo ln -sf /etc/nginx/sites-available/arun /etc/nginx/sites-enabled/
+sudo ln -sf /etc/nginx/sites-available/arun /etc/nginx/sites-enabled/arun
+sudo chmod -R 755 $REMOTE_PATH
+
+# --- SSL CERTIFICATE CHECK & INSTALL ---
+echo 'Checking SSL status for $DOMAIN...'
+if command -v certbot &> /dev/null; then
+    # This command checks if a cert exists, and if not, it installs one.
+    # It also automatically updates the Nginx config to use the new cert.
+    sudo certbot --nginx --non-interactive --agree-tos --register-unsafely-without-email -d $DOMAIN
+fi
+
 sudo nginx -t
 sudo systemctl restart nginx
-echo '✅ Server environment synchronized successfully!'
+echo '✅ Deployment complete. SSL should now be active for $DOMAIN.'
 "@
 
-ssh -t -p $SERVER_PORT $SSH_TARGET $REMOTE_CMD
-
-Write-Host ">>> Deployment Successful!" -ForegroundColor Green
-Write-Host ">>> Access your site at: http://api.edizo.in" -ForegroundColor Cyan
+ssh -t -p $SERVER_PORT "$USER@$SERVER_IP" $REMOTE_CMD
+Write-Host ">>> Site live at: https://$DOMAIN" -ForegroundColor Green
